@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App限免精选 - 发现苹果商店免费应用</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #007AFF;
+            --primary-light: #5AC8FA;
+            --secondary: #5856D6;
+            --accent: #FF2D55;
+            --success: #34C759;
+            --warning: #FF9500;
+            --background: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --text-primary: #1D1D1F;
+            --text-secondary: #86868B;
+            --text-tertiary: #C7C7CC;
+            --border: #E5E5EA;
+            --gradient-primary: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
+            --gradient-secondary: linear-gradient(135deg, #5856D6 0%, #AF52DE 100%);
+            --gradient-accent: linear-gradient(135deg, #FF2D55 0%, #FF9500 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 16px 0;
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-icon i {
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text .tagline {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 12px;
+        }
+
+        .search-box {
+            display: flex;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 10px 16px;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            width: 220px;
+            outline: none;
+            margin-left: 8px;
+            font-size: 14px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 40px 0 30px;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+
+        .daily-quote {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            margin: 0 auto;
+            max-width: 700px;
+            position: relative;
+            border-left: 4px solid var(--primary);
+        }
+
+        .daily-quote i {
+            position: absolute;
+            font-size: 40px;
+            opacity: 0.1;
+            color: var(--primary);
+        }
+
+        .daily-quote i:first-child {
+            top: 10px;
+            left: 15px;
+        }
+
+        .daily-quote i:last-child {
+            bottom: 10px;
+            right: 15px;
+            transform: rotate(180deg);
+        }
+
+        .quote-content {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-style: italic;
+            margin: 0;
+            padding: 0 40px;
+            line-height: 1.7;
+            text-align: center;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .tab::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            background: rgba(0, 122, 255, 0.1);
+        }
+
+        .tab.active::before {
+            width: 70%;
+        }
+
+        .app-count {
+            background: var(--primary);
+            color: white;
+            border-radius: 12px;
+            padding: 4px 10px;
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        /* Filter Chips */
+        .filter-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .filter-chip {
+            background: #f1f2f6;
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-chip.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Apps Grid */
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .app-card {
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .app-image {
+            height: 180px;
+            background: var(--gradient-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .app-icon {
+            font-size: 60px;
+            color: white;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+
+        .app-type {
+            display: inline-block;
+            background: rgba(0, 122, 255, 0.1);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .app-type.in-app {
+            background: rgba(52, 199, 89, 0.1);
+            color: var(--success);
+        }
+
+        .app-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            flex-grow: 1;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .app-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .app-price {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: var(--accent);
+            font-size: 14px;
+        }
+
+        .current-price {
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .get-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .get-btn:hover {
+            background: #0056CC;
+            transform: translateY(-2px);
+        }
+
+        .app-category {
+            background: #f8f9fa;
+            padding: 6px 12px;
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            display: inline-block;
+            align-self: flex-start;
+        }
+
+        /* Loading Animation */
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(0, 122, 255, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading p {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* Last Updated */
+        .last-updated {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .disclaimer {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            line-height: 1.6;
+        }
+
+        /* Error Message */
+        .error-message {
+            text-align: center;
+            padding: 40px;
+            color: var(--accent);
+            background: #FFECF0;
+            border-radius: var(--radius-lg);
+            margin: 20px 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .apps-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .search-container {
+                width: 100%;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .daily-quote {
+                padding: 15px;
+            }
+            
+            .quote-content {
+                font-size: 1rem;
+                padding: 0 30px;
+            }
+            
+            .tabs {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tab {
+                padding: 10px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero {
+                padding: 30px 0;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .daily-quote i {
+                font-size: 30px;
+            }
+            
+            .quote-content {
+                padding: 0 25px;
+            }
+            
+            .tabs-container {
+                padding: 15px;
+            }
+            
+            .app-card {
+                border-radius: var(--radius-md);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>App限免精选</h1>
+                        <div class="tagline">发现苹果商店今日免费应用</div>
+                    </div>
+                </div>
+                <div class="search-container">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="搜索应用..." id="searchInput">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h2>今日苹果商店限时免费</h2>
+            <div class="daily-quote" id="dailyQuote">
+                <i class="fas fa-quote-left"></i>
+                <p class="quote-content" id="quoteText">正在加载每日一言...</p>
+                <i class="fas fa-quote-left"></i>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <div class="tab active" data-type="all">
+                    全部应用 <span class="app-count" id="allCount">25</span>
+                </div>
+                <div class="tab" data-type="in-app">
+                    内购限免 <span class="app-count" id="inAppCount">10</span>
+                </div>
+                <div class="tab" data-type="app">
+                    本体限免 <span class="app-count" id="appCount">15</span>
+                </div>
+            </div>
+            
+            <div class="filter-chips">
+                <div class="filter-chip active" data-category="all">全部</div>
+                <div class="filter-chip" data-category="游戏">游戏</div>
+                <div class="filter-chip" data-category="工具">工具</div>
+                <div class="filter-chip" data-category="娱乐">娱乐</div>
+                <div class="filter-chip" data-category="教育">教育</div>
+                <div class="filter-chip" data-category="效率">效率</div>
+                <div class="filter-chip" data-category="健康">健康</div>
+                <div class="filter-chip" data-category="音乐">音乐</div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p>正在加载限免应用...</p>
+        </div>
+
+        <div class="apps-grid" id="appsGrid">
+            <!-- App cards will be generated by JavaScript -->
+        </div>
+
+        <div class="last-updated" id="lastUpdated">
+            <i class="fas fa-sync-alt"></i> 最后更新: 加载中...
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="disclaimer">
+                <p><strong>免责声明：</strong>本网站展示的限免应用信息来源于网络API，应用限免信息变化频繁，请以苹果官方App Store为准。本网站与Apple Inc.无关，仅为方便用户获取限免信息而创建。</p>
+            </div>
+            <p>© 2023 App限免精选 | Made with <i class="fas fa-heart" style="color: var(--accent);"></i> for Apple users</p>
+        </div>
+    </footer>
+
+    <script>
+        // API endpoints
+        const APP_FREE_API = 'https://api.zxki.cn/api/appfree';
+        const DAILY_QUOTE_API = 'https://api.zxki.cn/api/sjyy';
+        
+        // DOM elements
+        const appsGrid = document.getElementById('appsGrid');
+        const loadingElement = document.getElementById('loading');
+        const lastUpdatedElement = document.getElementById('lastUpdated');
+        const tabs = document.querySelectorAll('.tab');
+        const searchInput = document.getElementById('searchInput');
+        const allCountElement = document.getElementById('allCount');
+        const inAppCountElement = document.getElementById('inAppCount');
+        const appCountElement = document.getElementById('appCount');
+        const filterChips = document.querySelectorAll('.filter-chip');
+        const quoteTextElement = document.getElementById('quoteText');
+        
+        // App data
+        let allApps = [];
+        let filteredApps = [];
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDailyQuote();
+            fetchApps();
+            
+            // Add event listeners to tabs
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    filterApps(tab.dataset.type, searchInput.value);
+                });
+            });
+            
+            // Add event listener to search input
+            searchInput.addEventListener('input', (e) => {
+                const activeTab = document.querySelector('.tab.active');
+                filterApps(activeTab.dataset.type, e.target.value);
+            });
+            
+            // Add event listeners to filter chips
+            filterChips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    filterChips.forEach(c => c.classList.remove('active'));
+                    chip.classList.add('active');
+                    const activeTab = document.querySelector('.tab.active');
+                    filterApps(activeTab.dataset.type, searchInput.value, chip.dataset.category);
+                });
+            });
+        });
+        
+        // Fetch daily quote
+        async function fetchDailyQuote() {
+            try {
+                const response = await fetch(DAILY_QUOTE_API);
+                if (!response.ok) {
+                    throw new Error('无法获取每日一言');
+                }
+                const quote = await response.text();
+                quoteTextElement.textContent = quote;
+            } catch (error) {
+                console.error('获取每日一言时出错:', error);
+                quoteTextElement.textContent = "生活就像一盒巧克力，你永远不知道下一颗是什么味道。";
+            }
+        }
+        
+        // Fetch apps from API
+        async function fetchApps() {
+            try {
+                const response = await fetch(APP_FREE_API);
+                if (!response.ok) {
+                    throw new Error('网络响应不正常');
+                }
+                const data = await response.json();
+                
+                // Process the data
+                processAppData(data);
+                
+                // Hide loading indicator
+                loadingElement.style.display = 'none';
+            } catch (error) {
+                console.error('获取应用数据时出错:', error);
+                loadingElement.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>获取应用数据失败</h3>
+                        <p>错误: ${error.message}</p>
+                        <button onclick="fetchApps()" style="margin-top: 15px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer;">
+                            <i class="fas fa-redo"></i> 重试
+                        </button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Process app data from API
+        function processAppData(data) {
+            // Extract apps from the response
+            const inAppFree = data.apps['内购限免'] || [];
+            const appFree = data.apps['本体限免'] || [];
+            
+            // Add type information to each app
+            const inAppFreeWithType = inAppFree.map(app => ({
+                ...app,
+                type: 'in-app',
+                typeText: '内购限免',
+                category: categorizeApp(app.name),
+                originalPrice: getOriginalPrice(app.name),
+                icon: getAppIcon(app.name)
+            }));
+            
+            const appFreeWithType = appFree.map(app => ({
+                ...app,
+                type: 'app',
+                typeText: '本体限免',
+                category: categorizeApp(app.name),
+                originalPrice: getOriginalPrice(app.name),
+                icon: getAppIcon(app.name)
+            }));
+            
+            // Combine all apps
+            allApps = [...inAppFreeWithType, ...appFreeWithType];
+            
+            // Update counts
+            allCountElement.textContent = allApps.length;
+            inAppCountElement.textContent = inAppFree.length;
+            appCountElement.textContent = appFree.length;
+            
+            // Update last updated time
+            lastUpdatedElement.innerHTML = `<i class="fas fa-sync-alt"></i> 最后更新: ${data.last_updated || '未知时间'}`;
+            
+            // Display all apps initially
+            filterApps('all', '');
+        }
+        
+        // Categorize app based on name and description
+        function categorizeApp(appName) {
+            const lowerName = appName.toLowerCase();
+            
+            if (lowerName.includes('游戏') || lowerName.includes('game') || lowerName.includes('棋') || 
+                lowerName.includes('牌') || lowerName.includes('谜题') || lowerName.includes('冒险')) {
+                return '游戏';
+            } else if (lowerName.includes('工具') || lowerName.includes('utility') || lowerName.includes('计算') || 
+                       lowerName.includes('转换') || lowerName.includes('管理')) {
+                return '工具';
+            } else if (lowerName.includes('教育') || lowerName.includes('学习') || lowerName.includes('儿童') || 
+                       lowerName.includes('语言') || lowerName.includes('课程')) {
+                return '教育';
+            } else if (lowerName.includes('娱乐') || lowerName.includes('视频') || lowerName.includes('音乐') || 
+                       lowerName.includes('播放') || lowerName.includes('社交')) {
+                return '娱乐';
+            } else if (lowerName.includes('效率') || lowerName.includes('办公') || lowerName.includes('笔记') || 
+                       lowerName.includes('文档') || lowerName.includes('日历')) {
+                return '效率';
+            } else if (lowerName.includes('健康') || lowerName.includes('健身') || lowerName.includes('医疗') || 
+                       lowerName.includes('运动') || lowerName.includes('饮食')) {
+                return '健康';
+            } else if (lowerName.includes('音乐') || lowerName.includes('音频') || lowerName.includes('声音') || 
+                       lowerName.includes('播放器') || lowerName.includes('录音')) {
+                return '音乐';
+            }
+            
+            return '其他';
+        }
+        
+        // Extract original price from app name if available
+        function getOriginalPrice(appName) {
+            // This is a simplified example - in a real implementation, you would need
+            // to extract this information from the API or use another data source
+            const prices = ['¥1', '¥6', '¥12', '¥18', '¥25', '¥30', '¥45', '¥68'];
+            return prices[Math.floor(Math.random() * prices.length)];
+        }
+        
+        // Get appropriate app icon based on category
+        function getAppIcon(appName) {
+            const category = categorizeApp(appName);
+            
+            // Map categories to Font Awesome icons
+            const iconMap = {
+                '游戏': 'gamepad',
+                '工具': 'tools',
+                '教育': 'graduation-cap',
+                '娱乐': 'tv',
+                '效率': 'briefcase',
+                '健康': 'heartbeat',
+                '音乐': 'music',
+                '其他': 'mobile-alt'
+            };
+            
+            return iconMap[category] || 'mobile-alt';
+        }
+        
+        // Filter apps based on type, search query and category
+        function filterApps(type, query, category = 'all') {
+            // Filter by type
+            if (type === 'all') {
+                filteredApps = allApps;
+            } else {
+                filteredApps = allApps.filter(app => app.type === type);
+            }
+            
+            // Filter by search query
+            if (query) {
+                const lowerQuery = query.toLowerCase();
+                filteredApps = filteredApps.filter(app => 
+                    app.name.toLowerCase().includes(lowerQuery)
+                );
+            }
+            
+            // Filter by category
+            if (category !== 'all') {
+                filteredApps = filteredApps.filter(app => app.category === category);
+            }
+            
+            // Display apps
+            displayApps(filteredApps);
+        }
+        
+        // Display apps in the grid
+        function displayApps(apps) {
+            // Clear the grid
+            appsGrid.innerHTML = '';
+            
+            if (apps.length === 0) {
+                appsGrid.innerHTML = `
+                    <div class="no-results" style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-secondary);">
+                        <i class="fas fa-search" style="font-size: 48px; margin-bottom: 15px; color: var(--text-tertiary);"></i>
+                        <h3>没有找到匹配的应用</h3>
+                        <p>请尝试其他搜索条件或切换分类</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Create app cards
+            apps.forEach(app => {
+                const appCard = document.createElement('div');
+                appCard.className = 'app-card';
+                
+                // Extract app name (remove the URL part if present)
+                let appName = app.name;
+                let appDescription = "立即下载这款限时免费应用，机会难得！";
+                
+                if (appName.includes('//')) {
+                    const parts = appName.split('//');
+                    appName = parts[0];
+                    if (parts[1]) {
+                        appDescription = parts[1];
+                    }
+                }
+                
+                appCard.innerHTML = `
+                    <div class="app-image">
+                        <i class="fas fa-${app.icon} app-icon"></i>
+                    </div>
+                    <div class="app-content">
+                        <h3 class="app-title">${appName}</h3>
+                        <span class="app-type ${app.type === 'in-app' ? 'in-app' : ''}">${app.typeText}</span>
+                        <p class="app-description">${appDescription}</p>
+                        <span class="app-category">${app.category}</span>
+                        <div class="app-meta">
+                            <div class="app-price">
+                                <span class="original-price">${app.originalPrice}</span>
+                                <span class="current-price">免费</span>
+                            </div>
+                            <a href="${app.url}" target="_blank" class="get-btn">
+                                <i class="fas fa-download"></i> 获取
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                appsGrid.appendChild(appCard);
+            });
+        }
+    </script>
+</body>
+</html>
